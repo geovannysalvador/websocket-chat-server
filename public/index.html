@@ -55,7 +55,7 @@
                 .then( resp => {
                     console.log(resp);
                     // Almacenar el correo en el localStorage para luego mandarlo a llamar y cerrar 
-                    localStorage.setItem('email', resp.usuario.correo)
+                    localStorage.setItem('email', resp.usuario.correo);
                 } )
                 .catch(console.warn);
 
