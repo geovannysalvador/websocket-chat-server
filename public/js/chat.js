@@ -56,8 +56,8 @@ const connectarSocket = async () => {
     });
   
     socket.on('receibe-messages', (payload) => {
-      // displayUsuarios(payload);
-      console.log(payload);
+      displayMesajes(payload);
+      // console.log(payload);
     });
   
     socket.on('usuarios-activos', (payload) => {
@@ -65,8 +65,8 @@ const connectarSocket = async () => {
       // console.log(payload);
     });
   
-    socket.on('private-messages', (payload) => {
-      console.log(payload);
+    socket.on('mensaje-privado', (payload) => {
+      console.log('Privado: ', payload);
     });
   };
 
@@ -86,7 +86,21 @@ const displayUsuarios = (usuarios = []) => {
   ulUsuarios.innerHTML = usersHTML;
 }
 
+const displayMesajes = ( mensajes = []) => {
+  let mensajesHTML = '';
+  mensajes.forEach(({nombre, mensaje}) => {
+    mensajesHTML += `
+      <li>
+        <p>
+          <span class="text-primary">${nombre}: </span>
+          <span>${mensaje}</span>
+        </p>
+      </li>
+    `;
+  });
 
+  ulMensajes.innerHTML = mensajesHTML;
+};
 
 txtMsg.addEventListener('keyup', ({ keyCode }) => {
   const msg = txtMsg.value;
