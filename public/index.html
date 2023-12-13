@@ -30,51 +30,35 @@
     </div>
 
     <br>
-    <button id="salir" class="btn btn-danger">
+    <script src="https://accounts.google.com/gsi/client" async></script>
+    <button id="google_sign_out" class="btn btn-danger">
         Salir
     </button>
+    
+
+    <br>
+    <br>
+    <div class="row-cols-1 row-cols-lg-6">
+        <h1>Login Manual</h1>
+        <hr>
+        <br>
+
+        <form class="d-grid">
+            <input type="text" name="correo" class="form-control" placeholder="Correo"/>
+            <input type="text" name="password" class="form-control" placeholder="password"/>
+            <br>
+            <br>
+    
+            <button type="submit" class="btn btn-success">
+                Ingresar
+            </button>
+        </form>
+
+    </div>
 
     <script src="https://accounts.google.com/gsi/client" async></script>
 
-    <script>
-        function handleCredentialResponse(response) {
-
-            // google token : Id token
-            //console.log('id token', response.credential);
-
-            const body = { id_token: response.credential};
-
-            fetch('http://localhost:8080/api/auth/google', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(body)
-            })
-                .then( resp => resp.json() )
-                .then( resp => {
-                    console.log(resp);
-                    // Almacenar el correo en el localStorage para luego mandarlo a llamar y cerrar 
-                    localStorage.setItem('email', resp.usuario.correo);
-                } )
-                .catch(console.warn);
-
-        }
-
-        const button = document.getElementById('salir');
-            button.onclick = () => {
-                console.log( google.accounts.id );
-                // Propio de google
-                google.accounts.id.disableAutoSelect();
-                // Mandamos a cerrar y luego hacer uso de un callback
-                google.accounts.id.revoke(localStorage.getItem('email'), done => {
-                    // Limpiar el localStorage
-                    localStorage.clear();
-                    location.reload();
-                });
-            }
-
-      </script>
+    <script src="./js/auth-google.js"></script>
 
 </body>
 </html>
