@@ -25,6 +25,7 @@ miFormulario.addEventListener('submit', ev => {
         }
 
         localStorage.setItem('token', token);
+        window.location = 'chat.html';
         
       })
       .catch( err => {
@@ -49,7 +50,8 @@ function handleCredentialResponse(response) {
         .then(resp => resp.json())
         .then( ({token}) => {
             console.log(token);
-            localStorage.setItem('Token', token);
+            localStorage.setItem('token', token);
+            window.location = 'chat.html';
         })
         // .then(resp => {
         //     console.log(resp);
