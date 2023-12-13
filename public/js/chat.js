@@ -57,6 +57,7 @@ const connectarSocket = async () => {
   
     socket.on('receibe-messages', (payload) => {
       // displayUsuarios(payload);
+      console.log(payload);
     });
   
     socket.on('usuarios-activos', (payload) => {
@@ -85,6 +86,20 @@ const displayUsuarios = (usuarios = []) => {
   ulUsuarios.innerHTML = usersHTML;
 }
 
+
+
+txtMsg.addEventListener('keyup', ({ keyCode }) => {
+  const msg = txtMsg.value;
+  const uid = txtUid.value;
+  const token = localStorage.getItem('token');
+
+  if (keyCode !== 13) return;
+  if (msg.length === 0) return;
+  // Emitir a todos el mensaje despues de las validaciones
+  socket.emit('send-msg', { baseUrl: window.location.origin, msg, uid, token });
+
+  txtMsg.value = '';
+});
 
 const main = async() =>{
 
