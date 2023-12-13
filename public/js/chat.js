@@ -56,11 +56,12 @@ const connectarSocket = async () => {
     });
   
     socket.on('receibe-messages', (payload) => {
-      displayMessages(payload);
+      // displayMessages(payload);
     });
   
-    socket.on('active-users', (payload) => {
-      displayUsers(payload);
+    socket.on('usuarios-activos', (payload) => {
+      // displayUsers(payload);
+      console.log(payload);
     });
   
     socket.on('private-messages', (payload) => {

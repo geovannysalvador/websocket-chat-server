@@ -1,8 +1,12 @@
 const { Socket } = require("socket.io");
 const { comprobarJWT } = require("../helpers");
+const { ChatMensajes } = require('../models');
+const { disconnect } = require("mongoose");
+
+const chatmensajes = new ChatMensajes();
 
 
-const socketController = async (socket = new Socket) => {
+const socketController = async (socket = new Socket(), io) => {
 
     // const token = socket.handshake.headers['x-token']; 
     // verificar/comprobar 
@@ -11,7 +15,18 @@ const socketController = async (socket = new Socket) => {
         return socket.disconnect();
     }
 
-    console.log("se conecto ", usuario.nombre);
+    // console.log("se conecto ", usuario.nombre);
+
+    // Agregar el usuario conectado al arreglo
+    chatmensajes.conectarUsuario(usuario);
+    // Mostrar todos lo susuarios conectados
+    io.emit('usuarios-activos', chatmensajes.usuariosArr);
+
+    // Limpiar cuando se desconectan
+    socket.on('disconnect', () => {
+        io.emit('usuarios-activos', chatmensajes.usuariosArr);
+        chatmensajes.desconectarUsuario(usuario.id);
+    })
 
 }
 
